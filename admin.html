@@ -466,48 +466,135 @@ document
 
     const filtered =
 
-      data.filter(item => {
+data.filter(item => {
 
 
-        const cocokShift =
+  const cocokShift =
 
-          !filterShift ||
+    !filterShift ||
 
-          item.shift ===
-          filterShift;
-
-
-
-        const cocokDivisi =
-
-          !filterDivisi ||
-
-          item.divisi ===
-          filterDivisi;
+    item.shift ===
+    filterShift;
 
 
 
-       const cocokNama =
+  const cocokDivisi =
 
-item.nama
-.toLowerCase()
-.includes(
-  searchNama
-);
+    !filterDivisi ||
 
+    item.divisi ===
+    filterDivisi;
 
 
-return (
 
-  cocokShift &&
+  const cocokNama =
 
-  cocokDivisi &&
+    item.nama
+    .toLowerCase()
+    .includes(
+      searchNama
+    );
 
-  cocokNama
-
-);
 
 
+
+  const hariIni =
+    new Date();
+
+
+
+  const kemarin =
+    new Date();
+
+
+
+  kemarin.setDate(
+    kemarin.getDate() - 1
+  );
+
+
+
+
+  const tanggalItem =
+    new Date(item.shift);
+
+
+
+
+  const formatTanggal =
+
+    tanggal =>
+
+    tanggal
+    .toISOString()
+    .split("T")[0];
+
+
+
+
+  let cocokTanggal =
+    true;
+
+
+
+
+  if(
+    filterTanggal ===
+    "hariini"
+  ){
+
+    cocokTanggal =
+
+      formatTanggal(
+        tanggalItem
+      )
+
+      ===
+
+      formatTanggal(
+        hariIni
+      );
+
+  }
+
+
+
+
+  if(
+    filterTanggal ===
+    "kemarin"
+  ){
+
+    cocokTanggal =
+
+      formatTanggal(
+        tanggalItem
+      )
+
+      ===
+
+      formatTanggal(
+        kemarin
+      );
+
+  }
+
+
+
+
+  return (
+
+    cocokShift &&
+
+    cocokDivisi &&
+
+    cocokNama &&
+
+    cocokTanggal
+
+  );
+
+});
 
 
 
