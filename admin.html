@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Dashboard Admin SPPG TAMBAKREJO TEMPEL</title>
+<title>Dashboard Admin SPPG TAMBAKREJO</title>
 
 <style>
 
@@ -118,7 +118,7 @@ td{
 <body>
 
 <h1>
-Dashboard Admin SPPG TAMBAKREJO TEMPEL
+Dashboard Admin SPPG TAMBAKREJO
 </h1>
 
 <div class="subtitle">
@@ -395,9 +395,9 @@ async function loadData(){
 
       <td>${item.divisi}</td>
 
-      <td>${item.masuk}</td>
+      <td>${formatJam(item.masuk)}</td>
 
-      <td>${item.pulang || "-"}</td>
+<td>${item.pulang ? formatJam(item.pulang) : "-"}</td>
 
 
       <td>
@@ -552,7 +552,41 @@ function isiFilterDivisi(data){
 
 }
 
+// ======================
+// FORMAT JAM
+// ======================
 
+function formatJam(value){
+
+  if(!value){
+    return "-";
+  }
+
+
+  const date =
+    new Date(value);
+
+
+  if(isNaN(date)){
+    return value;
+  }
+
+
+  return date.toLocaleTimeString(
+
+    "id-ID",
+
+    {
+
+      hour:"2-digit",
+
+      minute:"2-digit"
+
+    }
+
+  );
+
+}
 
 
 // ======================
