@@ -9,6 +9,53 @@
 
 <style>
 
+#loginBox{
+
+  max-width:320px;
+
+  margin:80px auto;
+
+  background:white;
+
+  padding:24px;
+
+  border-radius:20px;
+
+  box-shadow:
+  0 4px 20px rgba(0,0,0,0.08);
+
+}
+
+#loginBox h2{
+
+  margin-bottom:20px;
+
+  text-align:center;
+
+}
+
+#loginBox input{
+
+  width:100%;
+
+  padding:14px;
+
+  border-radius:12px;
+
+  border:1px solid #ddd;
+
+  margin-bottom:14px;
+
+  font-size:16px;
+
+}
+
+#loginBox button{
+
+  width:100%;
+
+}
+  
 body{
   font-family:Arial,sans-serif;
   background:#f4f4f4;
@@ -117,6 +164,23 @@ td{
 </head>
 <body>
 
+<div id="loginBox">
+
+<h2>
+Login Admin
+</h2>
+
+<input
+type="password"
+id="adminPin"
+placeholder="Masukkan PIN Admin">
+
+<button onclick="loginAdmin()">
+Masuk Dashboard
+</button>
+
+</div>
+  <div id="dashboardBox" style="display:none;">
 <h1>
 Dashboard Admin SPPG TAMBAKREJO
 </h1>
@@ -193,7 +257,7 @@ Refresh
 </div>
 
 
-
+</div>
 <script>
 
 
@@ -589,12 +653,67 @@ function formatJam(value){
 }
 
 
-// ======================
-// AUTO LOAD
+  // ======================
+// PIN ADMIN
 // ======================
 
-loadData();
+const ADMIN_PIN =
+"666";
 
+
+
+
+// ======================
+// LOGIN ADMIN
+// ======================
+
+function loginAdmin(){
+
+  const pin =
+
+    document
+    .getElementById(
+      "adminPin"
+    )
+    .value;
+
+
+
+  if(pin === ADMIN_PIN){
+
+    document
+    .getElementById(
+      "loginBox"
+    )
+    .style.display =
+
+    "none";
+
+
+
+    document
+    .getElementById(
+      "dashboardBox"
+    )
+    .style.display =
+
+    "block";
+
+
+
+    loadData();
+
+  }
+
+  else{
+
+    alert(
+      "PIN Admin Salah"
+    );
+
+  }
+
+}
 
 
 // ======================
