@@ -5,9 +5,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Dashboard Admin SPPG TAMBAKREJO</title>
+<title>Dashboard Admin MBG</title>
 
 <style>
+
+body{
+  font-family:Arial,sans-serif;
+  background:#f4f4f4;
+  margin:0;
+  padding:20px;
+}
 
 #loginBox{
 
@@ -48,19 +55,14 @@
 
   font-size:16px;
 
+  box-sizing:border-box;
+
 }
 
 #loginBox button{
 
   width:100%;
 
-}
-  
-body{
-  font-family:Arial,sans-serif;
-  background:#f4f4f4;
-  margin:0;
-  padding:20px;
 }
 
 h1{
@@ -104,8 +106,7 @@ h1{
 }
 
 select,
-button,
-input{
+button{
   padding:12px;
   border-radius:12px;
   border:1px solid #ddd;
@@ -161,8 +162,6 @@ td{
 
 }
 
-
-
 .status-pulang{
 
   background:#ffebee;
@@ -180,16 +179,6 @@ td{
   display:inline-block;
 
 }
-  
-.status-belum{
-  color:#d32f2f;
-  font-weight:bold;
-}
-
-.status-selesai{
-  color:#2e7d32;
-  font-weight:bold;
-}
 
 .footer{
   text-align:center;
@@ -202,6 +191,8 @@ td{
 
 </head>
 <body>
+
+
 
 <div id="loginBox">
 
@@ -219,14 +210,22 @@ Masuk Dashboard
 </button>
 
 </div>
-  <div id="dashboardBox" style="display:none;">
+
+
+
+
+
+<div id="dashboardBox" style="display:none;">
+
+
 <h1>
-Dashboard Admin SPPG TAMBAKREJO
+Dashboard Admin MBG
 </h1>
 
 <div class="subtitle">
 Monitoring Absensi Relawan
 </div>
+
 
 
 <div class="card-wrap">
@@ -249,24 +248,30 @@ Monitoring Absensi Relawan
 </div>
 
 
+
+
 <div class="filter-box">
 
-  
-<select id="filterShift">
+<select id="filterShift" onchange="loadData()">
 <option value="">Semua Shift</option>
 </select>
 
-<select id="filterDivisi">
+<select id="filterDivisi" onchange="loadData()">
 <option value="">Semua Divisi</option>
 </select>
 
 <button onclick="loadData()">
 Refresh
 </button>
+
 <button onclick="exportExcel()">
 Export Excel
 </button>
+
 </div>
+
+
+
 
 
 <div class="table-wrap">
@@ -275,15 +280,17 @@ Export Excel
 
 <thead>
 <tr>
+
 <th>Shift</th>
 <th>Nama</th>
 <th>Divisi</th>
 <th>Masuk</th>
 <th>Pulang</th>
 <th>Status</th>
-  <th>Total Kerja</th>
+<th>Total Kerja</th>
 <th>Lokasi</th>
 <th>Foto</th>
+
 </tr>
 </thead>
 
@@ -295,13 +302,20 @@ Export Excel
 </div>
 
 
+
+
 <div class="footer">
 © 2026 F_
 </div>
 
-
 </div>
+
+
+
+
+
 <script>
+
 
 
 // ======================
@@ -310,6 +324,71 @@ Export Excel
 
 const url =
 "https://script.google.com/macros/s/AKfycbx-G-CyQyf9p5fie86A0c1ATJN_s3oXgUUsaJUhLKA9K5Zx2UiqAigeo3O8TqdFZygNYg/exec";
+
+
+
+
+// ======================
+// PIN ADMIN
+// ======================
+
+const ADMIN_PIN =
+"66";
+
+
+
+
+// ======================
+// LOGIN ADMIN
+// ======================
+
+function loginAdmin(){
+
+  const pin =
+
+    document
+    .getElementById(
+      "adminPin"
+    )
+    .value;
+
+
+
+  if(pin === ADMIN_PIN){
+
+    document
+    .getElementById(
+      "loginBox"
+    )
+    .style.display =
+
+    "none";
+
+
+
+    document
+    .getElementById(
+      "dashboardBox"
+    )
+    .style.display =
+
+    "block";
+
+
+
+    loadData();
+
+  }
+
+  else{
+
+    alert(
+      "PIN Admin Salah"
+    );
+
+  }
+
+}
 
 
 
@@ -439,6 +518,8 @@ async function loadData(){
       .value;
 
 
+
+
     const filterDivisi =
 
       document
@@ -450,137 +531,43 @@ async function loadData(){
 
 
 
+
     const filtered =
 
-data.filter(item => {
+      data.filter(item => {
 
 
-  const cocokShift =
+        const cocokShift =
 
-    !filterShift ||
+          !filterShift ||
 
-    item.shift ===
-    filterShift;
+          item.shift ===
+          filterShift;
 
 
 
-  const cocokDivisi =
+        const cocokDivisi =
 
-    !filterDivisi ||
+          !filterDivisi ||
 
-    item.divisi ===
-    filterDivisi;
+          item.divisi ===
+          filterDivisi;
 
 
 
 
-  return (
+        return (
 
-    cocokShift &&
+          cocokShift &&
 
-    cocokDivisi
+          cocokDivisi
 
-  );
+        );
 
-});
+      });
 
 
 
-  const hariIni =
-    new Date();
-
-
-
-  const kemarin =
-    new Date();
-
-
-
-  kemarin.setDate(
-    kemarin.getDate() - 1
-  );
-
-
-
-
-  const tanggalItem =
-    new Date(item.shift);
-
-
-
-
-  const formatTanggal =
-
-    tanggal =>
-
-    tanggal
-    .toISOString()
-    .split("T")[0];
-
-
-
-
-  let cocokTanggal =
-    true;
-
-
-
-
-  if(
-    filterTanggal ===
-    "hariini"
-  ){
-
-    cocokTanggal =
-
-      formatTanggal(
-        tanggalItem
-      )
-
-      ===
-
-      formatTanggal(
-        hariIni
-      );
-
-  }
-
-
-
-
-  if(
-    filterTanggal ===
-    "kemarin"
-  ){
-
-    cocokTanggal =
-
-      formatTanggal(
-        tanggalItem
-      )
-
-      ===
-
-      formatTanggal(
-        kemarin
-      );
-
-  }
-
-
-
-
-  return (
-
-    cocokShift &&
-
-    cocokDivisi &&
-
-    cocokTanggal
-
-  );
-
-});
 
 
 
@@ -602,31 +589,32 @@ data.filter(item => {
 
       <td>${formatJam(item.masuk)}</td>
 
-<td>${item.pulang ? formatJam(item.pulang) : "-"}</td>
+      <td>${item.pulang ? formatJam(item.pulang) : "-"}</td>
 
 
       <td>
 
-${item.pulang === ""
+      ${item.pulang === ""
 
-?
+      ?
 
-'<span class="status-aktif">🟢 Sedang Bertugas</span>'
+      '<span class="status-aktif">🟢 Sedang Bertugas</span>'
 
-:
+      :
 
-'<span class="status-pulang">🔴 Sudah Pulang</span>'}
+      '<span class="status-pulang">🔴 Sudah Pulang</span>'}
 
-</td>
+      </td>
 
-<td>
 
-${hitungDurasi(
-  item.masuk,
-  item.pulang
-)}
+      <td>
 
-</td>
+      ${hitungDurasi(
+        item.masuk,
+        item.pulang
+      )}
+
+      </td>
 
 
       <td>
@@ -766,6 +754,9 @@ function isiFilterDivisi(data){
 
 }
 
+
+
+
 // ======================
 // FORMAT JAM
 // ======================
@@ -803,70 +794,87 @@ function formatJam(value){
 }
 
 
-  // ======================
-// PIN ADMIN
-// ======================
-
-const ADMIN_PIN =
-"666";
-
-
 
 
 // ======================
-// LOGIN ADMIN
+// HITUNG DURASI
 // ======================
 
-function loginAdmin(){
+function hitungDurasi(
 
-  const pin =
+  masuk,
+  pulang
 
-    document
-    .getElementById(
-      "adminPin"
-    )
-    .value;
+){
 
+  if(!masuk || !pulang){
 
-
-  if(pin === ADMIN_PIN){
-
-    document
-    .getElementById(
-      "loginBox"
-    )
-    .style.display =
-
-    "none";
-
-
-
-    document
-    .getElementById(
-      "dashboardBox"
-    )
-    .style.display =
-
-    "block";
-
-
-
-    loadData();
+    return "-";
 
   }
 
-  else{
 
-    alert(
-      "PIN Admin Salah"
+
+  const jamMasuk =
+    new Date(masuk);
+
+
+  const jamPulang =
+    new Date(pulang);
+
+
+
+  if(
+    isNaN(jamMasuk) ||
+    isNaN(jamPulang)
+  ){
+
+    return "-";
+
+  }
+
+
+
+  let selisih =
+
+    (jamPulang - jamMasuk)
+
+    / 1000;
+
+
+
+  const jam =
+
+    Math.floor(
+      selisih / 3600
     );
 
-  }
+
+
+  const menit =
+
+    Math.floor(
+
+      (selisih % 3600)
+
+      / 60
+
+    );
+
+
+
+  return `
+
+  ${jam}j ${menit}m
+
+  `;
 
 }
 
 
-  // ======================
+
+
+// ======================
 // EXPORT EXCEL
 // ======================
 
@@ -946,81 +954,8 @@ function exportExcel(){
 }
 
 
-// ======================
-// HITUNG DURASI KERJA
-// ======================
-
-function hitungDurasi(
-
-  masuk,
-  pulang
-
-){
-
-  if(!masuk || !pulang){
-
-    return "-";
-
-  }
 
 
-
-  const jamMasuk =
-    new Date(masuk);
-
-
-  const jamPulang =
-    new Date(pulang);
-
-
-
-  if(
-    isNaN(jamMasuk) ||
-    isNaN(jamPulang)
-  ){
-
-    return "-";
-
-  }
-
-
-
-  let selisih =
-
-    (jamPulang - jamMasuk)
-
-    / 1000;
-
-
-
-  const jam =
-
-    Math.floor(
-      selisih / 3600
-    );
-
-
-
-  const menit =
-
-    Math.floor(
-
-      (selisih % 3600)
-
-      / 60
-
-    );
-
-
-
-  return `
-
-  ${jam}j ${menit}m
-
-  `;
-
-}
-  
 // ======================
 // AUTO REFRESH
 // ======================
