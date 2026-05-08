@@ -279,6 +279,7 @@ Export Excel
 <th>Masuk</th>
 <th>Pulang</th>
 <th>Status</th>
+  <th>Total Kerja</th>
 <th>Lokasi</th>
 <th>Foto</th>
 </tr>
@@ -518,6 +519,15 @@ ${item.pulang === ""
 
 </td>
 
+<td>
+
+${hitungDurasi(
+  item.masuk,
+  item.pulang
+)}
+
+</td>
+
 
       <td>
 
@@ -739,7 +749,80 @@ function loginAdmin(){
 
     "block";
 
+// ======================
+// HITUNG DURASI KERJA
+// ======================
 
+function hitungDurasi(
+
+  masuk,
+  pulang
+
+){
+
+  if(!masuk || !pulang){
+
+    return "-";
+
+  }
+
+
+
+  const jamMasuk =
+    new Date(masuk);
+
+
+  const jamPulang =
+    new Date(pulang);
+
+
+
+  if(
+    isNaN(jamMasuk) ||
+    isNaN(jamPulang)
+  ){
+
+    return "-";
+
+  }
+
+
+
+  let selisih =
+
+    (jamPulang - jamMasuk)
+
+    / 1000;
+
+
+
+  const jam =
+
+    Math.floor(
+      selisih / 3600
+    );
+
+
+
+  const menit =
+
+    Math.floor(
+
+      (selisih % 3600)
+
+      / 60
+
+    );
+
+
+
+  return `
+
+  ${jam}j ${menit}m
+
+  `;
+
+}
 
     loadData();
 
