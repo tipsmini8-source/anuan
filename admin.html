@@ -251,11 +251,6 @@ Monitoring Absensi Relawan
 
 <div class="filter-box">
 
-  <input
-type="text"
-id="searchNama"
-placeholder="Cari relawan..."
-onkeyup="loadData()">
   
 <select id="filterShift">
 <option value="">Semua Shift</option>
@@ -443,15 +438,6 @@ async function loadData(){
       )
       .value;
 
-    const searchNama =
-
-document
-.getElementById(
-  "searchNama"
-)
-.value
-.toLowerCase();
-
 
     const filterDivisi =
 
@@ -589,8 +575,6 @@ data.filter(item => {
     cocokShift &&
 
     cocokDivisi &&
-
-    cocokNama &&
 
     cocokTanggal
 
