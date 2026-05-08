@@ -142,6 +142,44 @@ td{
   border-bottom:1px solid #eee;
 }
 
+.status-aktif{
+
+  background:#e8f5e9;
+
+  color:#2e7d32;
+
+  padding:6px 12px;
+
+  border-radius:999px;
+
+  font-size:13px;
+
+  font-weight:bold;
+
+  display:inline-block;
+
+}
+
+
+
+.status-pulang{
+
+  background:#ffebee;
+
+  color:#c62828;
+
+  padding:6px 12px;
+
+  border-radius:999px;
+
+  font-size:13px;
+
+  font-weight:bold;
+
+  display:inline-block;
+
+}
+  
 .status-belum{
   color:#d32f2f;
   font-weight:bold;
@@ -468,17 +506,17 @@ async function loadData(){
 
       <td>
 
-      ${item.pulang === ""
+${item.pulang === ""
 
-      ?
+?
 
-      '<span class="status-belum">Belum Pulang</span>'
+'<span class="status-aktif">🟢 Sedang Bertugas</span>'
 
-      :
+:
 
-      '<span class="status-selesai">Selesai</span>'}
+'<span class="status-pulang">🔴 Sudah Pulang</span>'}
 
-      </td>
+</td>
 
 
       <td>
