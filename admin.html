@@ -104,7 +104,8 @@ h1{
 }
 
 select,
-button{
+button,
+input{
   padding:12px;
   border-radius:12px;
   border:1px solid #ddd;
@@ -250,6 +251,12 @@ Monitoring Absensi Relawan
 
 <div class="filter-box">
 
+  <input
+type="text"
+id="searchNama"
+placeholder="Cari relawan..."
+onkeyup="loadData()">
+  
 <select id="filterShift">
 <option value="">Semua Shift</option>
 </select>
@@ -436,7 +443,14 @@ async function loadData(){
       )
       .value;
 
+    const searchNama =
 
+document
+.getElementById(
+  "searchNama"
+)
+.value
+.toLowerCase();
 
 
     const filterDivisi =
@@ -473,12 +487,25 @@ async function loadData(){
 
 
 
-        return (
-          cocokShift &&
-          cocokDivisi
-        );
+       const cocokNama =
 
-      });
+item.nama
+.toLowerCase()
+.includes(
+  searchNama
+);
+
+
+
+return (
+
+  cocokShift &&
+
+  cocokDivisi &&
+
+  cocokNama
+
+);
 
 
 
