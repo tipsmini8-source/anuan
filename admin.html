@@ -223,7 +223,9 @@ Monitoring Absensi Relawan
 <button onclick="loadData()">
 Refresh
 </button>
-
+<button onclick="exportExcel()">
+Export Excel
+</button>
 </div>
 
 
@@ -715,6 +717,85 @@ function loginAdmin(){
 
 }
 
+
+  // ======================
+// EXPORT EXCEL
+// ======================
+
+function exportExcel(){
+
+  const table =
+
+    document.querySelector(
+      "table"
+    );
+
+
+  let html =
+
+    table.outerHTML;
+
+
+
+  html = html.replace(
+    /<a[^>]*>|<\/a>/g,
+    ""
+  );
+
+
+
+  const blob =
+
+    new Blob(
+
+      [html],
+
+      {
+
+        type:
+        "application/vnd.ms-excel"
+
+      }
+
+    );
+
+
+
+  const urlBlob =
+
+    URL.createObjectURL(
+      blob
+    );
+
+
+
+  const a =
+    document.createElement(
+      "a"
+    );
+
+
+
+  a.href =
+    urlBlob;
+
+
+
+  a.download =
+
+    "rekap-absensi.xls";
+
+
+
+  a.click();
+
+
+
+  URL.revokeObjectURL(
+    urlBlob
+  );
+
+}
 
 // ======================
 // AUTO REFRESH
